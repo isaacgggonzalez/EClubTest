@@ -8,8 +8,8 @@ Ademas se puede ejecutar el script que se añadio a la carpeta principal del pro
 Para hacer esto, descargar el script dump.sql, desde la consola (cmd en windows) ir hasta la carpeta del archivo y ejecutar el siguiente comando:
 psql --username=postgres --file=dump.sql  (usar las credenciales definidas en su servidor de postgre)
 
-
-Para probar las API se puede desde la herramienta de postman
+Debe tener en ejecución el cliente de rabbit para luego poner en ejecucion el proyecto en algun IDE como IntelliJ.
+Posteriormente puede probar las API se puede desde la herramienta de postman
 
 
 Para probar la API para crear clientes se debe enviar un una solicitud POST a la direccion "http://localhost:8080/api/cliente" con el siguiente formato en JSON
