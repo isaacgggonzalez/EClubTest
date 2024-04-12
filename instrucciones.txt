@@ -1,0 +1,43 @@
+Las configuraciones de puertos para rabbitmq y postgreSQL se deberan hacer desde el archivo application.properties
+Los puertos deberan coincidir con los establecidos para conectar al servidor de rabbit y de interfaz
+Los establecidos en el archivo application.properties coinciden con los del contenedor creado en docker con el siguiente comando:
+docker run --rm -it -p 15672:15672 -p 5672:5672 rabbitmq:3.13.1-management
+Tambien debera configurarse la contraseña y usuario de rabbit
+En este mismo archivo tambien se debe configurar el usuario, contraseña y puerto del server en PostgreSQL
+Ademas se puede ejecutar el script que se añadio a la carpeta principal del proyecto para contar con datos de prueba cargados
+Para hacer esto, descargar el script dump.sql, desde la consola (cmd en windows) ir hasta la carpeta del archivo y ejecutar el siguiente comando:
+psql --username=postgres --file=dump.sql  (usar las credenciales definidas en su servidor de postgre)
+
+
+Para probar las API se puede desde la herramienta de postman
+
+
+Para probar la API para crear clientes se debe enviar un una solicitud POST a la direccion "http://localhost:8080/api/cliente" con el siguiente formato en JSON
+{
+    "nombreCliente": "NombrePersona",
+    "apellidoCliente": "ApellidoPersona",
+    "ci": 999999
+}
+Para crear productos una solicitud POST a http://localhost:8080/api/productos
+con el siguiente formato JSON
+
+{
+    "nombre": "ProductoC",
+    "precio": "500000"
+}
+
+Para las solicitudes de compra o venta se haran solicitudes POST a
+http://localhost:8080/api/transaccion/compra
+http://localhost:8080/api/transaccion/venta  (respectivamente)
+con el formato
+{
+    "idClienteProveedor": 1,
+    "idProducto": 1,
+    "cantidad" : 3
+}
+
+
+Estas solicitudes se envian a sus respectivas colas de rabbit.
+Una vez en cola se absorveran, de ahi se hacen las verificaciones de id validos y disponibilidad en caso de venta.
+En el caso de venta, no se verifica el id de proveedor por simplicidad
+
